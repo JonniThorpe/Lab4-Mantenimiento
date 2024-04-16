@@ -27,6 +27,8 @@ import org.mps.selection.SelectionOperator;
  * La clase EvolutionaryAlgorithm proporciona una implementación básica de este
  * proceso de optimización, permitiendo la personalización mediante el uso de
  * diferentes operadores de selección, cruce y mutación.
+ *
+ * Error en la clase evolutiva
  */
 public class EvolutionaryAlgorithm {
     private SelectionOperator selectionOperator;
