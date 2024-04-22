@@ -35,58 +35,76 @@ public class EvolutionaryAlgorithm {
     private MutationOperator mutationOperator;
     private CrossoverOperator crossoverOperator;
 
-
     public EvolutionaryAlgorithm(SelectionOperator selectionOperator, MutationOperator mutationOperator,
-<span class="fc" id="L40">            CrossoverOperator crossoverOperator) throws EvolutionaryAlgorithmException {</span>
-<span class="fc bfc" id="L41" title="All 6 branches covered.">        if (selectionOperator == null || mutationOperator == null || crossoverOperator == null) {</span>
-<span class="fc" id="L42">            throw new EvolutionaryAlgorithmException(&quot;Argumentos nulos&quot;);</span>
+<span class="fc" id="L39">            CrossoverOperator crossoverOperator) throws EvolutionaryAlgorithmException {</span>
+<span class="fc bfc" id="L40" title="All 6 branches covered.">        if (selectionOperator == null || mutationOperator == null || crossoverOperator == null) {</span>
+<span class="fc" id="L41">            throw new EvolutionaryAlgorithmException(&quot;Argumentos nulos&quot;);</span>
         }
-<span class="fc" id="L44">        this.selectionOperator = selectionOperator;</span>
-<span class="fc" id="L45">        this.mutationOperator = mutationOperator;</span>
-<span class="fc" id="L46">        this.crossoverOperator = crossoverOperator;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L43">        this.selectionOperator = selectionOperator;</span>
+<span class="fc" id="L44">        this.mutationOperator = mutationOperator;</span>
+<span class="fc" id="L45">        this.crossoverOperator = crossoverOperator;</span>
+<span class="fc" id="L46">    }</span>
 
     public MutationOperator getMutationOperator() {
-<span class="fc" id="L50">        return mutationOperator;</span>
+<span class="fc" id="L49">        return mutationOperator;</span>
     }
 
     public void setMutationOperator(MutationOperator mutationOperator) {
-<span class="fc" id="L54">        this.mutationOperator = mutationOperator;</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L53">        this.mutationOperator = mutationOperator;</span>
+<span class="fc" id="L54">    }</span>
+
+    private boolean comprobarLong(int[][] p) {
+<span class="fc" id="L57">        boolean aux = true;</span>
+<span class="fc" id="L58">        int longitudEsperada = p[0].length;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (int i = 0; i &lt; p.length; i++) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (p[i].length != longitudEsperada) {</span>
+<span class="fc" id="L61">                aux = false;</span>
+            }
+        }
+<span class="fc" id="L64">        return aux;</span>
+    }
+
+    // El problema de optimize es que supone que todos los arrays dentro de
+    // population serán de
+    // la misma longitud, pero no si esto no es así, salta el error &quot;No se pudo
+    // realizar el cruce&quot;.
+    // Por lo tanto la solución es comprobar en el if que todos los arrays de la
+    // matriz son del
+    // mismo tamaño.
 
     public int[][] optimize(int[][] population) throws EvolutionaryAlgorithmException {
 
-<span class="fc bfc" id="L59" title="All 8 branches covered.">        if (population != null &amp;&amp; population.length &gt; 0 &amp;&amp; population[0]!=null &amp;&amp; population[0].length&gt;0) {</span>
+<span class="fc bfc" id="L77" title="All 10 branches covered.">        if (population != null &amp;&amp; population.length &gt; 0 &amp;&amp; population[0] != null &amp;&amp; population[0].length &gt; 0 &amp;&amp; comprobarLong(population)) {</span>
             // Creamos una nueva población para los descendientes
-<span class="fc" id="L61">            int[][] offspringPopulation = new int[population.length][population.length];</span>
+<span class="fc" id="L79">            int[][] offspringPopulation = new int[population.length][population.length];</span>
 
             // Aplicamos operadores de selección y cruce para generar descendientes
-<span class="fc bfc" id="L64" title="All 2 branches covered.">            for (int i = 0; i &lt; population.length; i += 2) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            for (int i = 0; i &lt; population.length; i += 2) {</span>
                 // Seleccionamos dos individuos de la población actual
-<span class="fc" id="L66">                int[] parent1 = selectionOperator.select(population[i]);</span>
-<span class="fc" id="L67">                int[] parent2 = selectionOperator.select(population[i + 1]);</span>
+<span class="fc" id="L84">                int[] parent1 = selectionOperator.select(population[i]);</span>
+<span class="fc" id="L85">                int[] parent2 = selectionOperator.select(population[i + 1]);</span>
 
                 // Aplicamos el operador de cruce para generar dos descendientes
-<span class="fc" id="L70">                int[][] offspring = crossoverOperator.crossover(parent1, parent2);</span>
-<span class="fc" id="L71">                offspringPopulation[i] = offspring[0];</span>
-<span class="fc" id="L72">                offspringPopulation[i + 1] = offspring[1];</span>
+<span class="fc" id="L88">                int[][] offspring = crossoverOperator.crossover(parent1, parent2);</span>
+<span class="fc" id="L89">                offspringPopulation[i] = offspring[0];</span>
+<span class="fc" id="L90">                offspringPopulation[i + 1] = offspring[1];</span>
             }
 
             // Aplicamos operador de mutación a los descendientes
-<span class="fc bfc" id="L76" title="All 2 branches covered.">            for (int i = 0; i &lt; offspringPopulation.length; i++) {</span>
-<span class="fc" id="L77">                offspringPopulation[i] = mutationOperator.mutate(offspringPopulation[i]);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            for (int i = 0; i &lt; offspringPopulation.length; i++) {</span>
+<span class="fc" id="L95">                offspringPopulation[i] = mutationOperator.mutate(offspringPopulation[i]);</span>
             }
 
             // Reemplazo
-<span class="fc bfc" id="L81" title="All 2 branches covered.">            for (int i = 0; i &lt; population.length; i++) {</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">                if (better(offspringPopulation[i], population[i])) {</span>
-<span class="fc" id="L83">                    population[i] = offspringPopulation[i];</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            for (int i = 0; i &lt; population.length; i++) {</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">                if (better(offspringPopulation[i], population[i])) {</span>
+<span class="fc" id="L101">                    population[i] = offspringPopulation[i];</span>
                 }
             }
-<span class="fc" id="L86">        }else{</span>
-<span class="fc" id="L87">            throw new EvolutionaryAlgorithmException(&quot;Poblacion no valida&quot;);</span>
+<span class="fc" id="L104">        } else {</span>
+<span class="fc" id="L105">            throw new EvolutionaryAlgorithmException(&quot;Poblacion no valida&quot;);</span>
         }
-<span class="fc" id="L89">        return population;</span>
+<span class="fc" id="L107">        return population;</span>
     }
 
     /*
@@ -95,30 +113,30 @@ public class EvolutionaryAlgorithm {
      * como el que tiene menor suma de sus elementos
      */
     private boolean better(int[] population1, int[] population2) {
-<span class="fc" id="L98">        int suma1 = 0;</span>
-<span class="fc" id="L99">        int suma2 = 0;</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (int i = 0; i &lt; population1.length; i++) {</span>
-<span class="fc" id="L101">            suma1 += population1[i];</span>
-<span class="fc" id="L102">            suma2 += population2[i];</span>
+<span class="fc" id="L116">        int suma1 = 0;</span>
+<span class="fc" id="L117">        int suma2 = 0;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (int i = 0; i &lt; population1.length; i++) {</span>
+<span class="fc" id="L119">            suma1 += population1[i];</span>
+<span class="fc" id="L120">            suma2 += population2[i];</span>
         }
-<span class="fc bfc" id="L104" title="All 2 branches covered.">        return suma1 &lt; suma2;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        return suma1 &lt; suma2;</span>
     }
 
     public SelectionOperator getSelectionOperator() {
-<span class="fc" id="L108">        return this.selectionOperator;</span>
+<span class="fc" id="L126">        return this.selectionOperator;</span>
     }
 
     public void setSelectionOperator(SelectionOperator selectionOperator) {
-<span class="fc" id="L112">        this.selectionOperator = selectionOperator;</span>
-<span class="fc" id="L113">    }</span>
+<span class="fc" id="L130">        this.selectionOperator = selectionOperator;</span>
+<span class="fc" id="L131">    }</span>
 
     public CrossoverOperator getCrossoverOperator() {
-<span class="fc" id="L116">        return this.crossoverOperator;</span>
+<span class="fc" id="L134">        return this.crossoverOperator;</span>
     }
 
     public void setCrossoverOperator(CrossoverOperator crossoverOperator) {
-<span class="fc" id="L120">        this.crossoverOperator = crossoverOperator;</span>
-<span class="fc" id="L121">    }</span>
+<span class="fc" id="L138">        this.crossoverOperator = crossoverOperator;</span>
+<span class="fc" id="L139">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -46,57 +46,57 @@ public class EvolutionaryAlgorithmTest {
     }
 
     @Test
-    public void evolutionaryAlgorithm_WithNullEverything_ShouldThrowException() {
+    public void evolutionaryAlgorithm_withNullEverything_shouldThrowException() {
         assertThrows(EvolutionaryAlgorithmException.class,
                 () -> new EvolutionaryAlgorithm(null, null, null));
     }
 
     @Test
-    public void evolutionaryAlgorithm_WithNullSelectionOperator_ShouldThrowException() {
+    public void evolutionaryAlgorithm_withNullSelectionOperator_shouldThrowException() {
         assertThrows(EvolutionaryAlgorithmException.class,
                 () -> new EvolutionaryAlgorithm(null, MO, CO));
     }
 
     @Test
-    public void evolutionaryAlgorithm_WithNullMutationOperator_ShouldThrowException() {
+    public void evolutionaryAlgorithm_withNullMutationOperator_shouldThrowException() {
         assertThrows(EvolutionaryAlgorithmException.class,
                 () -> new EvolutionaryAlgorithm(SO, null, CO));
     }
 
     @Test
-    public void evolutionaryAlgorithm_WithdNullCrossoverOperator_ShouldThrowException() {
+    public void evolutionaryAlgorithm_withNullCrossoverOperator_shouldThrowException() {
         assertThrows(EvolutionaryAlgorithmException.class,
                 () -> new EvolutionaryAlgorithm(SO, MO, null));
     }
 
     // TODO UNICA FORMA ES COMPROBAR TAMAÑOS DEL ARRAY COMO TEST
     @Test
-    public void optimize_IfAlgorithmIsEmpty_ShouldThrowEvolutionaryAlgorithmException() {
+    public void optimize_ifAlgorithmIsEmpty_shouldThrowEvolutionaryAlgorithmException() {
         int[][] algoritmo = new int[][] {};
         assertThrows(EvolutionaryAlgorithmException.class,
                 () -> ev.optimize(algoritmo));
     }
 
     @Test
-    public void optimize_IfAlgorithmIsNull_ShouldThrowEvolutionaryAlgorithmException() {
+    public void optimize_ifAlgorithmIsNull_shouldThrowEvolutionaryAlgorithmException() {
         int[][] algoritmo = null;
         assertThrows(EvolutionaryAlgorithmException.class,
                 () -> ev.optimize(algoritmo));
     }
 
     @Test
-    public void testSelectWithNullPopulation() {
+    public void select_withNullPopulation_shouldThrowEvolutionaryAlgorithmException() {
         assertThrows(EvolutionaryAlgorithmException.class, () -> SO.select(null));
     }
 
     @Test
-    public void testSelectWithEmptyPopulation() {
+    public void select_withEmptyPopulation_shouldThrowEvolutionaryAlgorithmException() {
         int[] population = new int[0];
         assertThrows(EvolutionaryAlgorithmException.class, () -> SO.select(population));
     }
 
     @Test
-    public void select_WithValidPopulation() throws EvolutionaryAlgorithmException {
+    public void select_withValidPopulation_shouldSelectCorrectly() throws EvolutionaryAlgorithmException {
         int[] population = { 1, 2 };
         int[] selected = SO.select(population);
         assertEquals(2, selected.length);
@@ -105,7 +105,7 @@ public class EvolutionaryAlgorithmTest {
     }
 
     @Test
-    public void select_WithValidPopulationMaximumTournamentSize() throws EvolutionaryAlgorithmException {
+    public void select_withValidPopulationMaximumTournamentSize_shouldSelectCorrectly() throws EvolutionaryAlgorithmException {
         int[] population = { 2, 6, 9, 4, 2 };
         int[] selected = SO.select(population);
 
@@ -125,7 +125,7 @@ public class EvolutionaryAlgorithmTest {
 
     // Tests para el método crossover
     @Test
-    public void crossover_WithNullParents() {
+    public void crossover_withNullParents_shouldThrowEvolutionaryAlgorithmException() {
         int[] parent1 = null;
         int[] parent2 = null;
 
@@ -135,7 +135,7 @@ public class EvolutionaryAlgorithmTest {
     }
 
     @Test
-    public void crossover_WithOneNullParent() {
+    public void crossover_withOneNullParent_shouldThrowEvolutionaryAlgorithmException() {
         int[] parent1 = { 1, 2, 3 };
         int[] parent2 = null;
 
@@ -145,7 +145,7 @@ public class EvolutionaryAlgorithmTest {
     }
 
     @Test
-    public void crossover_WithUnequalLengthParents() {
+    public void crossover_withUnequalLengthParents_shouldThrowEvolutionaryAlgorithmException() {
         int[] parent1 = { 1, 2, 3 };
         int[] parent2 = { 4, 5 };
 
@@ -155,7 +155,7 @@ public class EvolutionaryAlgorithmTest {
     }
 
     @Test
-    public void crossover_WithEmptyParents() {
+    public void crossover_withEmptyParents_shouldThrowEvolutionaryAlgorithmException() {
         int[] parent1 = {};
         int[] parent2 = {};
 
@@ -165,7 +165,7 @@ public class EvolutionaryAlgorithmTest {
     }
 
     @Test
-    public void crossover_WithValidParents() throws EvolutionaryAlgorithmException {
+    public void crossover_withValidParents_shouldDoCrossover() throws EvolutionaryAlgorithmException {
         int[] parent1 = { 1, 2, 3, 4, 5 };
         int[] parent2 = { 6, 7, 8, 9, 10 };
 
@@ -186,19 +186,19 @@ public class EvolutionaryAlgorithmTest {
 
     // Tests para método mutate
     @Test
-    public void testMutateWithNullIndividual() {
+    public void mutate_withNullIndividual_shouldThrowEvolutionaryAlgorithmException() {
         int[] individual = null;
         assertThrows(EvolutionaryAlgorithmException.class, () -> MO.mutate(individual));
     }
 
     @Test
-    public void testMutateWithEmptyIndividual() {
+    public void mutate_withEmptyIndividual_shouldThrowEvolutionaryAlgorithmException() {
         int[] individual = {};
         assertThrows(EvolutionaryAlgorithmException.class, () -> MO.mutate(individual));
     }
 
     @Test
-    public void testMutateWithValidIndividual() throws EvolutionaryAlgorithmException {
+    public void mutate_withValidIndividual_shouldSwap() throws EvolutionaryAlgorithmException {
         int[] individual = { 1, 2, 5, 3 };
 
         int[] mutatedIndividual = MO.mutate(individual);
@@ -220,31 +220,37 @@ public class EvolutionaryAlgorithmTest {
 
     // Tests para método optimize
     @Test
-    public void testOptimizeWithNullPopulation() {
+    public void optimize_withNullPopulation_shouldThrowEvolutionaryAlgorithmException() {
         int[][] population = null;
         assertThrows(EvolutionaryAlgorithmException.class, () -> ev.optimize(population));
     }
 
     @Test
-    public void testOptimizeWithEmptyPopulation() {
+    public void optimize_withEmptyPopulation_shouldThrowEvolutionaryAlgorithmException() {
         int[][] population = {};
         assertThrows(EvolutionaryAlgorithmException.class, () -> ev.optimize(population));
     }
 
     @Test
-    public void testOptimizeWithNullIndividualsInPopulation() {
+    public void optimize_withNullIndividualsInPopulation_shouldThrowEvolutionaryAlgorithmException() {
         int[][] population = { null, { 4, 5 } };
         assertThrows(EvolutionaryAlgorithmException.class, () -> ev.optimize(population));
     }
 
     @Test
-    public void testOptimizeWithEmptyIndividualsInPopulation() {
+    public void optimize_withEmptyIndividualsInPopulation_shouldThrowEvolutionaryAlgorithmException() {
         int[][] population = { {}, { 4, 5 } };
         assertThrows(EvolutionaryAlgorithmException.class, () -> ev.optimize(population));
     }
 
     @Test
-    public void optimize_WithValidInput_ShouldReturnTheSameMatrix() throws EvolutionaryAlgorithmException {
+    public void optimize_withDifferentLengthInIndividuals_shouldThrowEvolutionaryAlgorithmException() {
+        int[][] population = { { 1 }, { 4, 5 } };
+        assertThrows(EvolutionaryAlgorithmException.class, () -> ev.optimize(population));
+    }
+
+    @Test
+    public void optimize_withBetterOffspring_shouldReplacePopulation() throws EvolutionaryAlgorithmException {
         int[][] population = { { 12, 42, 17, 32, 49 },
                 { 14, 50, 38, 29, 10 } };
         int[][] population2 = { { 12, 42, 17, 32, 49 },
@@ -288,40 +294,57 @@ public class EvolutionaryAlgorithmTest {
     }
 
     @Test
-    public void select_IfSelectionIsEmpty_ShouldThrowEvolutionaryAlgorithmException()
+    public void optimize_withWorseOrSameOffspring_shouldNotReplacePopulation() throws EvolutionaryAlgorithmException {
+        int[][] population = { { 5, 5, 5 },
+                { 5, 5, 5 },
+                { 5, 5, 5 },
+                { 5, 5, 5 } };
+        int[][] population2 = { { 5, 5, 5 },
+                { 5, 5, 5 },
+                { 5, 5, 5 },
+                { 5, 5, 5 } };
+        int[][] optimizedPopulation = ev.optimize(population);
+
+        for(int i=0; i<population2.length; i++){
+            assertArrayEquals(population2[i], optimizedPopulation[i]);
+        }
+    }
+
+    @Test
+    public void select_ifSelectionIsEmpty_shouldThrowEvolutionaryAlgorithmException()
             throws EvolutionaryAlgorithmException {
         assertThrows(EvolutionaryAlgorithmException.class, () -> SO.select(new int[] {}));
     }
 
     @Test
-    public void tournamentSelection_IfSelectionIsEmpty_ShouldThrowEvolutionaryAlgorithmException() {
+    public void tournamentSelection_ifSelectionIsEmpty_shouldThrowEvolutionaryAlgorithmException() {
         assertThrows(EvolutionaryAlgorithmException.class, () -> SO = new TournamentSelection(0));
     }
 
     @Test
-    public void mutate_IfMutateIsEmpty_ShouldThrowEvolutionaryAlgorithmException() {
+    public void mutate_ifMutateIsEmpty_shouldThrowEvolutionaryAlgorithmException() {
         assertThrows(EvolutionaryAlgorithmException.class, () -> MO.mutate(new int[] {}));
     }
 
     @Test
-    public void crossover_IfCrossoverIsEmpty_ShouldThrowEvolutionaryAlgorithmException() {
+    public void crossover_ifCrossoverIsEmpty_shouldThrowEvolutionaryAlgorithmException() {
         assertThrows(EvolutionaryAlgorithmException.class, () -> CO.crossover(new int[] {}, new int[] {}));
     }
 
     @Test
-    public void setSelectionOperator_WithValidInput_ShouldSetSelectionOperator() {
+    public void setSelectionOperator_withValidInput_shouldSetSelectionOperator() {
         ev.setSelectionOperator(SO);
         assertEquals(ev.getSelectionOperator(), SO);
     }
 
     @Test
-    public void setCrossoverOperator_WithValidInput_ShouldSetCrossoverOperator() {
+    public void setCrossoverOperator_withValidInput_shouldSetCrossoverOperator() {
         ev.setCrossoverOperator(CO);
         assertEquals(ev.getCrossoverOperator(), CO);
     }
 
     @Test
-    public void setMutationOperator_WithValidInput_ShouldSetMutationOperator() {
+    public void setMutationOperator_withValidInput_shouldSetMutationOperator() {
         ev.setMutationOperator(MO);
         assertEquals(ev.getMutationOperator(), MO);
     }

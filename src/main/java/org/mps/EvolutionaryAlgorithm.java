@@ -35,7 +35,6 @@ public class EvolutionaryAlgorithm {
     private MutationOperator mutationOperator;
     private CrossoverOperator crossoverOperator;
 
-
     public EvolutionaryAlgorithm(SelectionOperator selectionOperator, MutationOperator mutationOperator,
             CrossoverOperator crossoverOperator) throws EvolutionaryAlgorithmException {
         if (selectionOperator == null || mutationOperator == null || crossoverOperator == null) {
@@ -54,9 +53,28 @@ public class EvolutionaryAlgorithm {
         this.mutationOperator = mutationOperator;
     }
 
+    private boolean comprobarLong(int[][] p) {
+        boolean aux = true;
+        int longitudEsperada = p[0].length;
+        for (int i = 0; i < p.length; i++) {
+            if (p[i].length != longitudEsperada) {
+                aux = false;
+            }
+        }
+        return aux;
+    }
+
+    // El problema de optimize es que supone que todos los arrays dentro de
+    // population serán de
+    // la misma longitud, pero no si esto no es así, salta el error "No se pudo
+    // realizar el cruce".
+    // Por lo tanto la solución es comprobar en el if que todos los arrays de la
+    // matriz son del
+    // mismo tamaño.
+
     public int[][] optimize(int[][] population) throws EvolutionaryAlgorithmException {
 
-        if (population != null && population.length > 0 && population[0]!=null && population[0].length>0) {
+        if (population != null && population.length > 0 && population[0] != null && population[0].length > 0 && comprobarLong(population)) {
             // Creamos una nueva población para los descendientes
             int[][] offspringPopulation = new int[population.length][population.length];
 
@@ -83,7 +101,7 @@ public class EvolutionaryAlgorithm {
                     population[i] = offspringPopulation[i];
                 }
             }
-        }else{
+        } else {
             throw new EvolutionaryAlgorithmException("Poblacion no valida");
         }
         return population;

@@ -47,7 +47,7 @@ public class TournamentSelection implements SelectionOperator {
 <span class="fc" id="L47">                int best = -1;</span>
 <span class="fc bfc" id="L48" title="All 2 branches covered.">                for (int j = 0; j &lt; tournamentSize; j++) {</span>
 <span class="fc" id="L49">                    int candidate = population[random.nextInt(population.length)];</span>
-<span class="fc bfc" id="L50" title="All 4 branches covered.">                    if (best == -1 || candidate &gt; best) {</span>
+<span class="fc bfc" id="L50" title="All 4 branches covered.">                    if (best == -1 || candidate &lt; best) {</span>
 <span class="fc" id="L51">                        best = candidate;</span>
                     }
                 }
