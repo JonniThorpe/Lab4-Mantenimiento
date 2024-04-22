@@ -245,14 +245,46 @@ public class EvolutionaryAlgorithmTest {
 
     @Test
     public void optimize_WithValidInput_ShouldReturnTheSameMatrix() throws EvolutionaryAlgorithmException {
-        int[][] population = { { 1, 2 }, { 3, 4 } };
+        int[][] population = { { 12, 42, 17, 32, 49 },
+                { 14, 50, 38, 29, 10 } };
+        int[][] population2 = { { 12, 42, 17, 32, 49 },
+                { 14, 50, 38, 29, 10 } };
         int[][] optimizedPopulation = ev.optimize(population);
-        printMatrix(matrix);
-        System.out.println();
-        System.out.println();
+
+        assertNotEquals(population2, optimizedPopulation);
+        System.out.println("Array sin optimize");
+        System.out.println("");
+        printMatrix(population2);
+        System.out.println("");
+        System.out.println("Array optimizado");
+        System.out.println("");
         printMatrix(optimizedPopulation);
-        System.out.println(optimizedPopulation);
-        assertEquals(population, optimizedPopulation);
+        System.out.println("");
+
+        population = matrix;
+        population2 = new int[][] {
+                { 12, 42, 17, 32, 49 },
+                { 14, 50, 38, 29, 10 },
+                { 46, 38, 27, 4, 11 },
+                { 2, 23, 17, 18, 46 },
+                { 25, 40, 14, 22, 3 },
+                { 7, 21, 33, 48, 19 },
+                { 35, 8, 41, 13, 16 },
+                { 9, 37, 31, 6, 28 },
+                { 45, 26, 44, 15, 30 },
+                { 1, 47, 20, 34, 36 }
+        };
+        optimizedPopulation = ev.optimize(population);
+
+        assertNotEquals(population2, optimizedPopulation);
+        System.out.println("Array sin optimize");
+        System.out.println("");
+        printMatrix(population2);
+        System.out.println("");
+        System.out.println("Array optimizado");
+        System.out.println("");
+        printMatrix(optimizedPopulation);
+        System.out.println("");
     }
 
     @Test

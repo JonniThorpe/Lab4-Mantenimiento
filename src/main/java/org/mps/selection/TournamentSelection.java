@@ -47,7 +47,7 @@ public class TournamentSelection implements SelectionOperator {
                 int best = -1;
                 for (int j = 0; j < tournamentSize; j++) {
                     int candidate = population[random.nextInt(population.length)];
-                    if (best == -1 || candidate > best) {
+                    if (best == -1 || candidate < best) {
                         best = candidate;
                     }
                 }
